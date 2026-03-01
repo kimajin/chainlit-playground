@@ -1,4 +1,6 @@
-SOURCE = main.py
+TARGET ?= hello
+
+SOURCE = src
 
 .PHONY: format lint test
 
@@ -11,3 +13,6 @@ format:
 lint:
 	uv run ruff check $(SOURCE)
 	uv run ty check $(SOURCE)
+
+run:
+	uv run uvicorn chainlit_playground.main:app --reload --factory --host localhost --port 8000
