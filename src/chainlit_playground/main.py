@@ -3,20 +3,25 @@ import os
 from chainlit.utils import mount_chainlit
 from fastapi import FastAPI
 
-from chainlit_playground import hello, auth_demo
 
-APPS: dict[str, str] = {
-    "hello": hello.app.__file__,
-    "auth_demo": auth_demo.app.__file__,
-}
+def get_app_path() -> str:
+    target = os.getenv("TARGET", "hello")
+    match target:
+        case "hello":
+            from chainlit_playground import hello  # noqa: PLC0415
+
+            return hello.app.__file__
+        case "auth_demo":
+            from chainlit_playground import auth_demo  # noqa: PLC0415
+
+            return auth_demo.app.__file__
+        case _:
+            msg = f"Unknown target: {target}"
+            raise ValueError(msg)
 
 
 def app() -> FastAPI:
-    target = APPS.get(os.getenv("TARGET", "hello"))
-    if target is None:
-        msg = f"Unknown target: {target}. Available targets: {', '.join(APPS.keys())}"
-        raise ValueError(msg)
-
     app = FastAPI()
+    target = get_app_path()
     mount_chainlit(app, target, path="/")
     return app

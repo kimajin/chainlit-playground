@@ -7,7 +7,7 @@
 ### アプリの構造
 
 - 新しいアプリケーションは `src/chainlit_playground/` ディレクトリ以下に作成してください
-- 作成したアプリは `src/chainlit_playground/main.py` の `APPS` に登録する必要があります
+- 作成したアプリは `src/chainlit_playground/main.py` の `get_app_path()` 関数に登録する必要があります
 
 ### アプリの切り替え
 

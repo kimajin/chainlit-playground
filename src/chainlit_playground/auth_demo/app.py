@@ -9,7 +9,9 @@ async def auth_callback(username: str, _password: str) -> cl.User | None:
     """
     if username != "guest@example.com":
         return None
-    return cl.User(identifier="guest", metadata={"role": "guest",  "provider": "credentials"})
+    return cl.User(
+        identifier="guest", metadata={"role": "guest", "provider": "credentials"}
+    )
 
 
 @cl.on_chat_start
