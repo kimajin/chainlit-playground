@@ -15,6 +15,6 @@ async def auth_callback(username: str, _password: str) -> cl.User | None:
 
 
 @cl.on_chat_start
-async def main() -> None:
+async def on_chat_start() -> None:
     user = cl.user_session.get("user")
     await cl.Message(content=f"ようこそ {user.identifier} さん").send()

@@ -2,7 +2,7 @@ TARGET ?= hello
 
 SOURCE = src
 
-.PHONY: format lint test
+.PHONY: format lint run setup-db teardown-db
 
 all: format lint
 
@@ -16,3 +16,9 @@ lint:
 
 run:
 	uv run uvicorn chainlit_playground.main:app --reload --factory --host localhost --port 8000
+
+setup-db:
+	docker compose -f sandbox/postgres/docker-compose.yaml up -d
+
+teardown-db:
+	docker compose -f sandbox/postgres/docker-compose.yaml down
