@@ -4,6 +4,7 @@ from datetime import UTC, datetime
 
 import chainlit as cl
 from chainlit.data.sql_alchemy import SQLAlchemyDataLayer
+from chainlit.types import ThreadDict
 
 
 @cl.password_auth_callback
@@ -22,6 +23,11 @@ async def auth_callback(username: str, _password: str) -> cl.User | None:
 @cl.data_layer
 def data_layer() -> SQLAlchemyDataLayer:
     return SQLAlchemyDataLayer(conninfo=os.environ["CHAINLIT_CONNINFO"])
+
+
+@cl.on_chat_resume
+async def on_chat_resume(_: ThreadDict) -> None:
+    pass
 
 
 @cl.on_chat_start
